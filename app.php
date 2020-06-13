@@ -50,6 +50,15 @@
 
 	  	}
 
+	  	public function editProject($job_no, $proj_name, $proj_ref, $proj_id){
+
+	  		$sql = "UPDATE project SET proj_name='".$proj_name."', proj_ref='".$proj_ref."', proj_id='".$proj_id."' WHERE job_code='".$job_no."'";
+	  		// echo $sql;
+	  		if ($this->conn->query($sql) === FALSE) 
+			  echo "Error: " . $sql . "<br>" . $this->conn->error;
+
+	  	}
+
 
 	  	/************** STAFF DATA *************/
 
