@@ -17,18 +17,18 @@
 				die("Connection failed: " . $this->conn->connect_error);
 		}
 
-		function getNavBar($tab){
+		function getNavBar(){
 			echo '<nav class="navbar navbar-inverse">
 		      <div class="container-fluid">
 		        <div class="navbar-header">
 		          <a class="navbar-brand" href="index.php">TimeIn</a>
 		        </div>
 		        <ul class="nav navbar-nav">
-		          <li><a href="index.php">Dashboard</a></li>
-		          <li class="active"><a href="projects.php">Projects</a></li>
-		          <li><a href="staff.php">Staff</a></li>
-		          <li><a href="#">TimeSheet</a></li>
-		          <li><a href="#">Invoice</a></li>
+		          <li id="navDashboard"><a href="index.php">Dashboard</a></li>
+		          <li id="navProjects"><a href="projects.php">Projects</a></li>
+		          <li id="navStaff"><a href="staff.php">Staff</a></li>
+		          <li id="navTimesheet"><a href="#">TimeSheet</a></li>
+		          <li id="navInvoice"><a href="#">Invoice</a></li>
 		        </ul>
 		        <ul class="nav navbar-nav navbar-right">
 		          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>

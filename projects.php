@@ -45,28 +45,11 @@
   <body>
   <form id="projectForm" method="post" action="" class="form-horizontal">
 
-    <nav class="navbar navbar-inverse">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="index.php">WebSiteName</a>
-        </div>
-        <ul class="nav navbar-nav">
-          <li><a href="index.php">Dashboard</a></li>
-          <li class="active"><a href="projects.php">Projects</a></li>
-          <li><a href="#">Staff</a></li>
-          <li><a href="#">TimeSheet</a></li>
-          <li><a href="#">Invoice</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-          <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-        </ul>
-      </div>
-    </nav>
+    <?php $app->getNavBar(); ?>
 
     <div class="container-fluid col-md-10 col-md-offset-1">
       <div class="table-responsive">          
-        <table class="table table-striped table-hover">
+        <table class="table table-hover">
           <thead>
             <tr>
               <th></th>
@@ -116,6 +99,9 @@
 
   <script>
     $(document).ready(function(){
+
+      /* Navbar Active Tab */
+      $("#navProjects").addClass("active");
 
       /* Script for Edit button */
       $(".editProject").click(function(){
