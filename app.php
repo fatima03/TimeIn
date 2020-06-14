@@ -17,6 +17,27 @@
 				die("Connection failed: " . $this->conn->connect_error);
 		}
 
+		function getNavBar($tab){
+			echo '<nav class="navbar navbar-inverse">
+		      <div class="container-fluid">
+		        <div class="navbar-header">
+		          <a class="navbar-brand" href="index.php">TimeIn</a>
+		        </div>
+		        <ul class="nav navbar-nav">
+		          <li><a href="index.php">Dashboard</a></li>
+		          <li class="active"><a href="projects.php">Projects</a></li>
+		          <li><a href="staff.php">Staff</a></li>
+		          <li><a href="#">TimeSheet</a></li>
+		          <li><a href="#">Invoice</a></li>
+		        </ul>
+		        <ul class="nav navbar-nav navbar-right">
+		          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+		          <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+		        </ul>
+		      </div>
+		    </nav>';
+		}
+
 		/********** PROJECT DATA ************/
 
 		public function cleanInput($str){
@@ -41,18 +62,27 @@
 		  	return $result;
 	  	}
 
-	  	public function addProject($job_no, $proj_name, $proj_ref, $proj_id){
+	  	public function addProject($job_code, $proj_name, $proj_ref, $proj_id){
 
-	  		$sql = "INSERT INTO project VALUES('".$job_no."', '".$proj_name."', '".$proj_ref."', '".$proj_id."')";
+	  		$sql = "INSERT INTO project VALUES('".$job_code."', '".$proj_name."', '".$proj_ref."', '".$proj_id."')";
 	  		// echo $sql;
 	  		if ($this->conn->query($sql) === FALSE) 
 			  echo "Error: " . $sql . "<br>" . $this->conn->error;
 
 	  	}
 
-	  	public function editProject($job_no, $proj_name, $proj_ref, $proj_id){
+	  	public function editProject($job_code, $proj_name, $proj_ref, $proj_id){
 
-	  		$sql = "UPDATE project SET proj_name='".$proj_name."', proj_ref='".$proj_ref."', proj_id='".$proj_id."' WHERE job_code='".$job_no."'";
+	  		$sql = "UPDATE project SET proj_name='".$proj_name."', proj_ref='".$proj_ref."', proj_id='".$proj_id."' WHERE job_code='".$job_code."'";
+	  		// echo $sql;
+	  		if ($this->conn->query($sql) === FALSE) 
+			  echo "Error: " . $sql . "<br>" . $this->conn->error;
+
+	  	}
+
+	  	public function removeProject($job_code){
+
+	  		$sql = "DELETE FROM project WHERE job_code='".$job_code."'";
 	  		// echo $sql;
 	  		if ($this->conn->query($sql) === FALSE) 
 			  echo "Error: " . $sql . "<br>" . $this->conn->error;

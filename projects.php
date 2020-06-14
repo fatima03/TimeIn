@@ -9,6 +9,7 @@
 
     <!-- Plugins -->
     <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="plugins/style.css">
     <script src="plugins/jquery/jquery-3.5.1.min.js"></script>
     <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
 
@@ -16,27 +17,33 @@
       include 'app.php';
 
       if (isset($_POST['add_project'])) {
-        $job_no = $app->cleanInput($_POST['job_no']);
+        $job_code = $app->cleanInput($_POST['job_code']);
         $proj_name = $app->cleanInput($_POST['proj_name']);
         $proj_ref = $app->cleanInput($_POST['proj_ref']);
         $proj_id = $app->cleanInput($_POST['proj_id']);
-        $app->addProject($job_no, $proj_name, $proj_ref, $proj_id);
+        $app->addProject($job_code, $proj_name, $proj_ref, $proj_id);
       }
 
-      if (isset($_POST['edit_project'])) {
-        $job_no = $app->cleanInput($_POST['old_job_no']);
+      if (isset($_POST['save_project'])) {
+        $job_code = $app->cleanInput($_POST['old_job_code']);
         $proj_name = $app->cleanInput($_POST['new_proj_name']);
         $proj_ref = $app->cleanInput($_POST['new_proj_ref']);
         $proj_id = $app->cleanInput($_POST['new_proj_id']);
-        $app->editProject($job_no, $proj_name, $proj_ref, $proj_id);
+        $app->editProject($job_code, $proj_name, $proj_ref, $proj_id);
       }
+
+      if (isset($_POST['remove_project'])) {
+        $job_code = $app->cleanInput($_POST['del_job_code']);
+        $app->removeProject($job_code);
+      }
+
 
     ?>
 
   </head>
 
   <body>
-  <form method="post" action="" class="form-horizontal">
+  <form id="projectForm" method="post" action="" class="form-horizontal">
 
     <nav class="navbar navbar-inverse">
       <div class="container-fluid">
@@ -57,13 +64,13 @@
       </div>
     </nav>
 
-    <div class="container-fluid">
-      <div class="table-responsive ">          
-        <table class="table table-hover">
+    <div class="container-fluid col-md-10 col-md-offset-1">
+      <div class="table-responsive">          
+        <table class="table table-striped table-hover">
           <thead>
             <tr>
               <th></th>
-              <th>Job Number</th>
+              <th>Job Code</th>
               <th>Project Name</th>
               <th>Project Reference</th>
               <th>Project ID</th>
@@ -84,7 +91,7 @@
                   echo '<button type="button" class="btn btn-warning btn-xs editProject">
                         <span class="glyphicon glyphicon-pencil"></span> 
                         </button>&emsp;';
-                  echo '<button type="button" class="btn btn-danger btn-xs removeProject">
+                  echo '<button type="submit" name="remove_project" class="btn btn-danger btn-xs removeProject">
                         <span class="glyphicon glyphicon-remove" color="red"></span> 
                         </button>';
                   echo '</td>';
@@ -94,7 +101,7 @@
             ?>
             <tr>
               <td id="abc"><?=$sr_no?></td>
-              <td><input type="text" name="job_no" style="width: 100%;"></td>
+              <td><input type="text" name="job_code" style="width: 100%;"></td>
               <td><input type="text" name="proj_name" style="width: 100%;"></td>
               <td><input type="text" name="proj_ref" style="width: 100%;"></td>
               <td><input type="text" name="proj_id" style="width: 100%;"></td>
@@ -113,11 +120,11 @@
       /* Script for Edit button */
       $(".editProject").click(function(){
         // $(".editProject").hide();
-        var btn = '<input type="submit" name="edit_project" class="btn btn-warning" value="Save">';
+        var btn = '<input type="submit" name="save_project" class="btn btn-warning" value="Save">';
         $(this).parent().append(btn);
         //job_code
         var c1 = $(this).parents("tr").children(".job_code");
-        var t1 = '<input type="hidden" name="old_job_no" value="'+c1.text()+'" style="width: 100%;">';
+        var t1 = '<input type="hidden" name="old_job_code" value="'+c1.text()+'" style="width: 100%;">';
         c1.append(t1);
         //proj_name
         var c1 = $(this).parents("tr").children(".proj_name");
@@ -136,6 +143,18 @@
         c1.append(t1);
         $(".editProject").remove();
         $(".removeProject").remove();
+      });
+
+      $(".removeProject").click(function(){
+       
+        //job_code in a hidden location
+        var c1 = $(this).parents("tr").children(".job_code");
+        var t1 = '<input type="hidden" name="del_job_code" value="" style="width: 100%;">';
+        if( confirm('Are you sure you want to delete "'+c1.text()+'"?') ) {
+            t1 = '<input type="hidden" name="del_job_code" value="'+c1.text()+'" style="width: 100%;">';
+        }
+        c1.append(t1);
+
       });
 
     });
